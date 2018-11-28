@@ -2,68 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.swq.dao.UserDao">
-    <resultMap type="com.swq.model.AuthUser" id="userResultMap">
-        <result column="user_id" property="userId"/>
-        <result column="login_name" property="loginName"/>
-        <result column="password" property="password"/>
-        <result column="password_a" property="passwordA"/>
-        <result column="password_b" property="passwordB"/>
-        <result column="user_name" property="userName"/>
-        <result column="mobile_number" property="mobileNumber"/>
-        <result column="telphone_number" property="telphoneNumber"/>
-        <result column="email" property="email"/>
-        <result column="create_time" property="createTime"/>
-        <result column="first_login_time" property="firstLoginTime"/>
-        <result column="last_login_time" property="lastLoginTime"/>
-        <result column="login_count" property="loginCount"/>
-        <result column="image_url" property="imageUrl"/>
-    </resultMap>
-    <select id="queryAllUsers" parameterType="com.swq.model.AuthUser" resultMap="userResultMap">
-        SELECT *
-        FROM AUTH_USER
-        <trim prefix="WHERE" prefixOverrides="AND">
-            <if test=" userId != null and  userId != '' ">
-                AND user_id = #{ userId,jdbcType=VARCHAR}
-            </if>
-            <if test="loginName != null and loginName != '' ">
-                AND login_name = #{loginName,jdbcType=VARCHAR}
-            </if>
-            <if test="password != null and password != '' ">
-                AND password = #{password,jdbcType=VARCHAR}
-            </if>
-            <if test="passwordA != null and passwordA != '' ">
-                AND password_a = #{passwordA,jdbcType=VARCHAR}
-            </if>
-            <if test="passwordB != null and passwordB != '' ">
-                AND password_b = #{passwordB,jdbcType=VARCHAR}
-            </if>
-            <if test="userName != null and userName != '' ">
-                AND user_name = #{userName,jdbcType=VARCHAR}
-            </if>
-            <if test="mobileNumber != null and mobileNumber != '' ">
-                AND mobile_number = #{mobileNumber,jdbcType=VARCHAR}
-            </if>
-            <if test="telphoneNumber != null and telphoneNumber != '' ">
-                AND telphone_number = #{telphoneNumber,jdbcType=VARCHAR}
-            </if>
-            <if test="email != null and email != '' ">
-                AND email = #{email,jdbcType=VARCHAR}
-            </if>
-            <if test="createTime != null">
-                AND create_time = #{createTime,jdbcType=TIMESTAMP}
-            </if>
-            <if test="firstLoginTime != null">
-                AND first_login_time = #{firstLoginTime,jdbcType=TIMESTAMP}
-            </if>
-            <if test="lastLoginTime != null">
-                AND last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP}
-            </if>
-            <if test="loginCount != null and loginCount != '' ">
-                AND login_count = #{loginCount,jdbcType=VARCHAR}
-            </if>
-        </trim>
-    </select>
-
     <insert id="insertNum">
         INSERT INTO testnum7 (
               num1,

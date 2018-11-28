@@ -541,5 +541,10 @@
         <artifactId>spring-rabbit</artifactId>
         <version>${spring-rabbit.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.quartz-scheduler</groupId>
+        <artifactId>quartz</artifactId>
+        <version>2.2.2</version>
+      </dependency>
     </dependencies>
 </project>
