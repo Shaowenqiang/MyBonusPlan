@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao dao;
 
-    public List createNum (){
+    public List money (){
         ArrayList<Integer> arr = new ArrayList();
         arr.add((int)(Math.random()*35)+1);
         int b = getNumArea(35,arr);
@@ -80,4 +80,14 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    public List createNum() {
+        List result = new ArrayList();
+        result.add(money());
+        result.add(money());
+        result.add(money());
+        result.add(money());
+        result.add(money());
+        return result;
+    }
 }
