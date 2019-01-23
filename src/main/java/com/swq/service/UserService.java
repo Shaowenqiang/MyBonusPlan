@@ -3,6 +3,7 @@ package com.swq.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 此接口为用户信息业务接口
@@ -12,4 +13,6 @@ import java.util.List;
  */
 public interface UserService {
     List createNum();
+
+    void insertBatch(List<Map> item);
 }

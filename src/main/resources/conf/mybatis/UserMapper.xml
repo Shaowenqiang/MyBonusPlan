@@ -25,4 +25,33 @@
         #{n7}
         )
     </insert>
+    <insert id="insertBatch" parameterType="list">
+        REPLACE INTO
+        bonus_table
+        (
+        id,
+        num1,
+        num2,
+        num3,
+        num4,
+        num5,
+        num6,
+        num7,
+        num8
+        )
+        VALUES
+        <foreach collection ="list" item="item" index= "index" separator =",">
+            (
+            #{item.id},
+            #{item.n0},
+            #{item.n1},
+            #{item.n2},
+            #{item.n3},
+            #{item.n4},
+            #{item.n5},
+            #{item.n6},
+            #{item.n7}
+            )
+        </foreach >
+    </insert>
 </mapper>
