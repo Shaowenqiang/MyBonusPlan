@@ -3,6 +3,9 @@ package com.swq.dao;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 用户信息操作数据库接口
  *
@@ -16,4 +19,6 @@ public interface UserDao {
               @Param("n4")Integer integer4, @Param("n5")Integer integer5,
               @Param("n6")Integer integer6, @Param("n7")Integer integer7,
               @Param("n8")Integer i);
+
+    void insertBatch(List<Map> item);
 }

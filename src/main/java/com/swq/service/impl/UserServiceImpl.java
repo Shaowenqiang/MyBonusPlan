@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户信息业务实现类
@@ -50,8 +51,6 @@ public class UserServiceImpl implements UserService {
         int g=getNumArea(12,arr2);
         arr2.add(g);
         arr2.sort(com);
-        System.out.print(arr);
-        System.out.print(arr2);
 
         dao.insertNum(
                 arr.get(0),arr.get(1),arr.get(2),arr.get(3),
@@ -67,11 +66,15 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    @Override
+    public void insertBatch(List<Map> item) {
+        dao.insertBatch(item);
+    }
+
     private int getNumArea(int maxNum,ArrayList arr) {
         int num ;
         do{
             num= (int)(Math.random()*maxNum)+1;
-            System.out.println(arr.contains(num));
         }while (arr.contains(num));
         return num;
     }
