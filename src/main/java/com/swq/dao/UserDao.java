@@ -21,5 +21,7 @@ public interface UserDao {
               @Param("n8")Integer i);
 
     void insertBatch(List<Map> item);
+
+    List queryList();
     void insertBatchForNovel (List<Map> item);
 }

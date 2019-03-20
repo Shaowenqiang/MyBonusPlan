@@ -73,5 +73,8 @@
             )
         </foreach >
     </insert>
+    <select id="queryList">
+        select * from bonus_table
+    </select>
 
 </mapper>

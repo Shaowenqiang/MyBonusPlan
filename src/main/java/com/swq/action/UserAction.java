@@ -19,6 +19,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import static java.util.concurrent.Executors.newFixedThreadPool;
+import static java.util.concurrent.Executors.unconfigurableExecutorService;
 
 @Controller
 @RequestMapping("/user")
@@ -114,5 +115,18 @@ public class UserAction {
         }
         long b = System.currentTimeMillis();
         System.out.println("一共耗时："+(b-a)+"ms");
+    }
+
+    public static void main(String[] arg){
+        UserService user = FrameSpringBeanUtil.getBean(UserService.class);
+        List list = user.queryList();
+    }
+
+    @ResponseBody
+    @RequestMapping("/query")
+    public String query() {
+        List list = service.queryList();
+        System.out.println(list.size());
+        return  null;
     }
 }

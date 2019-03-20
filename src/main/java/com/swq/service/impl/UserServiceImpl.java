@@ -1,9 +1,7 @@
 package com.swq.service.impl;
 
-import com.swq.action.BonusThread;
 import com.swq.dao.UserDao;
 import com.swq.service.UserService;
-import com.swq.util.ListOperationUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +11,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
-
-import static java.util.concurrent.Executors.newFixedThreadPool;
 
 /**
  * 用户信息业务实现类
@@ -123,6 +116,11 @@ public class UserServiceImpl implements UserService {
         if(item.size()>0){
             dao.insertBatchForNovel(item);
         }
+    }
+
+    @Override
+    public List queryList() {
+        return dao.queryList();
     }
 
     private int getNumArea(int maxNum,ArrayList arr) {
