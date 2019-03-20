@@ -1,6 +1,7 @@
 package com.swq.action;
 
 import com.swq.service.UserService;
+import com.swq.util.FrameSpringBeanUtil;
 import com.swq.util.ListOperationUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import static java.util.concurrent.Executors.newFixedThreadPool;
@@ -27,35 +30,89 @@ public class UserAction {
     @ResponseBody
     @RequestMapping("/createNum")
     public String createNum() throws Exception {
+        return service.createMoreNum();
+    }
+    @ResponseBody
+    @RequestMapping("/getNovelNames")
+    public void getNovelNames(String[] args) throws Exception {
         long a = System.currentTimeMillis();
-        List<Future<List<Map>>> list = new ArrayList();
-        ExecutorService executor = newFixedThreadPool(8);
-        for (int i=0;i<8;i++){
-            //提交一个任务
-            BonusThread t1 = new BonusThread("我是第"+i+"个任务");
-            //执行任务并获取Future对象
-            Future<List<Map>> future  = executor.submit(t1);
-            list.add(future);
+        List<Future<List>> list = new ArrayList<>();
+        ExecutorService executor = Executors.newFixedThreadPool(8);
+        for (int i = 1;i<12;i++){
+            String[] cate = {
+                    "xuanhuan",
+                    "yanqing",
+                    "wuxia",
+                    "danmei",
+                    "xiaoyuan",
+                    "kehuan",
+                    "chuanyeu",
+                    "wangyou",
+                    "lishi",
+                    "yanqing",
+                    "wenxue"
+            };
+            for(int j = 1;j<680;j++){
+                //提交一个任务
+                String url = "http://www.qishu.cc/"+cate[i-1]+"/list"+i+"_"+j+".html";
+                SwqDownloadNovel t1 = new SwqDownloadNovel(url,cate[i-1]);
+                //执行任务并获取Future对象
+                Future<List> future  = executor.submit(t1);
+                list.add(future);
+            }
         }
         executor.shutdown();
-        List<Map> resultList=new ArrayList();
         while(true){
             if(executor.isTerminated()){
-                for (Future<List<Map>> f:list){
-                    resultList.addAll(f.get());
+                for (Future<List> f:list){
+                    service.insertBatchForNovel(f.get());
                 }
-                System.out.println("所有的子线程都结束了！");
-                executor.shutdownNow();
                 break;
             }
         }
-        List<List<Map>> splitList = ListOperationUtil.splitList(resultList,10000);
-        for (List<Map> item : splitList) {
-            service.insertBatch(item);
+        long b = System.currentTimeMillis();
+        System.out.println("一共耗时："+(b-a)+"ms");
+    }
+
+    @ResponseBody
+    @RequestMapping("/getNovelNames_2")
+    public void getNovelNames_2(String[] args) throws Exception {
+        long a = System.currentTimeMillis();
+        List<Future<List>> list = new ArrayList<>();
+        ExecutorService executor = Executors.newFixedThreadPool(8);
+        String[] cate = {
+                "xuanhuan",
+                "yanqing",
+                "wuxia",
+                "danmei",
+                "xiaoyuan",
+                "kehuan",
+                "chuanyeu",
+                "wangyou",
+                "lishi",
+                "yanqing",
+                "wenxue"
+        };
+        int i = 6;
+        int j_num  = 200;
+        for(int j = 1;j<j_num;j++){
+                //提交一个任务
+                String url = "http://www.qishu.cc/"+cate[i-1]+"/list"+i+"_"+j+".html";
+                SwqDownloadNovel t1 = new SwqDownloadNovel(url,cate[i-1]);
+                //执行任务并获取Future对象
+                Future<List> future  = executor.submit(t1);
+                list.add(future);
+            }
+        executor.shutdown();
+        while(true){
+            if(executor.isTerminated()){
+                for (Future<List> f:list){
+                    service.insertBatchForNovel(f.get());
+                }
+                break;
+            }
         }
         long b = System.currentTimeMillis();
-        System.out.println("success");
-        System.out.println("耗时："+(b-a)/1000+"s");
-        return "success";
+        System.out.println("一共耗时："+(b-a)+"ms");
     }
 }

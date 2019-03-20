@@ -15,4 +15,8 @@ public interface UserService {
     List createNum();
 
     void insertBatch(List<Map> item);
+
+    String createMoreNum();
+
+    void insertBatchForNovel(List item);
 }
