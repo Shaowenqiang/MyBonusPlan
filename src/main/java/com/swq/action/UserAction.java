@@ -129,4 +129,9 @@ public class UserAction {
         System.out.println(list.size());
         return  null;
     }
+    @ResponseBody
+    @RequestMapping("/queryOneGroup")
+    public List queryOneGroup(){
+        return service.createNum();
+    }
 }
